@@ -40,3 +40,9 @@ from affiche_arbre import *
 arbre = entrerArbre(1)
 dessiner_arbre(arbre)
 ```
+
+# Changelog
+
+## 1.0 ##
+*   Affichage d'arbres binaires
+*   TODO: Générer la taille de l'image en fonction de la hauteur de l'arbre
