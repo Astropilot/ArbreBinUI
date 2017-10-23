@@ -5,6 +5,8 @@ ArbreBinUI est un script python permettant l'affichage de manière graphique (im
 Ce script fait appel à un autre script permettant la saisie en console d'un arbre binaire ainsi que sa représentation
 par une classe *Arbre*. Le script [saisie.py](https://github.com/Astropilot/ArbreBinUI/blob/master/Code/saisie.py) à été développé par Pierre Lartigau en 2016.
 
+![ScreenShot](https://github.com/Astropilot/ArbreBinUI/blob/master/Images/arbresbin.png)
+
 # Installation et prérequis
 
 Pour utiliser correctement ce script vous avez besoin de
