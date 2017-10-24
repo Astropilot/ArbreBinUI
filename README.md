@@ -29,7 +29,7 @@ $ pip install pillow
 
 Pour utiliser ArbreBinUI, vous pouvez soit le lancer directement:
 ```sh
-$ python affiche_arbre.py
+$ python affiche_arbre.py [-save]
 ```
 
 Soit l'importer dans vos projets python pour l'utiliser, example:
@@ -38,13 +38,15 @@ Soit l'importer dans vos projets python pour l'utiliser, example:
 from affiche_arbre import *
 
 arbre = entrerArbre(1)
-dessiner_arbre(arbre)
+dessiner_arbre(arbre) # Ne sauvegarde pas l'image
+dessiner_arbre(arbre, True) # Sauvegarde l'image dans le même répertoire que le script
 ```
 
 # Changelog
 
 ## 1.1 ##
 *   La taille de l'image est générée en fonction de la hauteur de l'arbre
+*   L'image peut être sauvegardée si demandée
 
 ## 1.0 ##
 *   Affichage d'arbres binaires
