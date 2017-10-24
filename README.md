@@ -46,3 +46,5 @@ dessiner_arbre(arbre)
 ## 1.0 ##
 *   Affichage d'arbres binaires
 *   **TODO**: Générer la taille de l'image en fonction de la hauteur de l'arbre
+## 1.1 ##
+*   La taille de l'image est générée en fonction de la hauteur de l'arbre
