@@ -11,6 +11,7 @@ try:
 except ImportError:
 	os.system('python -m pip install pillow')
 
+from time import gmtime, strftime
 from saisie import *
 
 """
@@ -29,7 +30,7 @@ TAILLE_NOEUD = 30
 DIMI_OFFSET = 50
 
 if(os.name == 'nt'):
-	# Sous windows le path des polices est gérer
+	# Sous windows le path des polices est géré
 	FONT = ImageFont.truetype('arial.ttf', TAILLE_NOEUD - 5)
 if(os.name == 'posix'):
 	# Mais sous linux il faut spécifier le chemin absolu (sur d'anciennes versions de Pillow)
@@ -92,7 +93,7 @@ def dessiner(draw, a, indice, niveau, i):
 			draw.line((get_center_noeud(filsDIndice[0], filsDIndice[2], 0), filsDIndice[1], get_center_noeud(calculIndice[0], calculIndice[2], 0), calculIndice[3]), fill = 'black')
 
 # Créer une image, dessine l'arbre dedans et l'affiche
-def dessiner_arbre(a):
+def dessiner_arbre(a, saveImage=False):
 	# On créé une nouvelle image
 
 	image_Largeur = (calcul_nb_noeud_niveau(calcul_hauteur_arbre(a) + 1) * TAILLE_NOEUD) * 2
@@ -107,6 +108,8 @@ def dessiner_arbre(a):
 
 	# On affiche l'image dans l'explorateur d'image par défaut
 	im.show()
+	if(saveImage):
+		im.save("arbre_" + strftime("%Y-%m-%d_%Hh%Mm%Ss", gmtime()) + ".png","PNG")
 	del im
 
 # Cette partie n'est exécutée que si l'on lance le script directement, et non dans les import
@@ -114,4 +117,4 @@ if __name__ == "__main__":
 	# On demande a rentrer un arbre (saisie classique en console, se référer au fichier saisie.py)
 	arbre = entrerArbre(1)
 	# On dessine et affiche notre arbre
-	dessiner_arbre(arbre)
+	dessiner_arbre(arbre, True)
