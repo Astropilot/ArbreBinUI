@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os
+import os, sys
 
 # Si Pillow n'est pas installé, alors on tente de l'installer avant
 try:
@@ -116,5 +116,10 @@ def dessiner_arbre(a, saveImage=False):
 if __name__ == "__main__":
 	# On demande a rentrer un arbre (saisie classique en console, se référer au fichier saisie.py)
 	arbre = entrerArbre(1)
-	# On dessine et affiche notre arbre
-	dessiner_arbre(arbre, True)
+
+	if(len(sys.argv) > 1):
+		if(sys.argv[1] == "-save"):
+			# On dessine et affiche notre arbre
+			dessiner_arbre(arbre, True)
+	else:
+		dessiner_arbre(arbre)
