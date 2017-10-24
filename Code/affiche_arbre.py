@@ -4,14 +4,13 @@ import os
 
 # Si Pillow n'est pas installé, alors on tente de l'installer avant
 try:
-	import PIL
+	from PIL import Image
+	from PIL import ImageColor
+	from PIL import ImageDraw
+	from PIL import ImageFont
 except ImportError:
 	os.system('python -m pip install pillow')
 
-from PIL import Image
-from PIL import ImageColor
-from PIL import ImageDraw
-from PIL import ImageFont
 from saisie import *
 
 """
@@ -36,6 +35,19 @@ if(os.name == 'posix'):
 	# Mais sous linux il faut spécifier le chemin absolu (sur d'anciennes versions de Pillow)
 	FONT = ImageFont.truetype('/usr/share/fonts/truetype/ttf-liberation/LiberationSans-Regular.ttf', TAILLE_NOEUD - 5)
 
+# Permet de calculer la hauteur d'un arbre binaire
+def calcul_hauteur_arbre(a):
+	if(a == None):
+		return -1
+	else:
+		h_g = calcul_hauteur_arbre(a.G)
+		h_d = calcul_hauteur_arbre(a.D)
+		return 1 + max(h_g, h_d)
+
+# Retourne le nombre de noeuds pour un niveau donné dans un arbre binaire complet
+def calcul_nb_noeud_niveau(k):
+	return (2**(k-1))
+
 # Permet d'obtenir le pixel sur l'axe X qui est au centre d'un noeud
 def get_center_noeud(noeud_debut, noeud_largeur, text_size):
 	return noeud_debut + ((noeud_largeur - noeud_debut - text_size) / 2)
@@ -46,9 +58,9 @@ def calcul_indiceX(i, niveau):
 
 # Permet de calculer les indices des coins haut/gauche et bas/droit pour un noeud
 def calcul_indice(indice, indiceX, niveau):
-	return [indice[0] * indiceX, (indice[1] * niveau) + DIMI_OFFSET * niveau, indice[0] * indiceX + TAILLE_NOEUD, (indice[1] * niveau) + TAILLE_NOEUD + (DIMI_OFFSET * niveau)]
+	return [indice[0] * indiceX - (TAILLE_NOEUD / 2), (indice[1] * niveau) + DIMI_OFFSET * niveau, indice[0] * indiceX + (TAILLE_NOEUD / 2), (indice[1] * niveau) + TAILLE_NOEUD + (DIMI_OFFSET * niveau)]
 
-# Permet de dessiner l'arbre à partir d'un parcours en profondeur
+# Permet de dessiner l'arbre à partir d'un parcours en profondeur (récursivité)
 def dessiner(draw, a, indice, niveau, i):
 	if(a != None):
 
@@ -82,12 +94,16 @@ def dessiner(draw, a, indice, niveau, i):
 # Créer une image, dessine l'arbre dedans et l'affiche
 def dessiner_arbre(a):
 	# On créé une nouvelle image
-	im = Image.new("RGB", (1000, 1000), (255,255,255))
+
+	image_Largeur = (calcul_nb_noeud_niveau(calcul_hauteur_arbre(a) + 1) * TAILLE_NOEUD) * 2
+	image_Hauteur = ((calcul_hauteur_arbre(a) + 1) * (TAILLE_NOEUD + DIMI_OFFSET)) * 2
+
+	im = Image.new("RGB", (image_Largeur, image_Hauteur), (255,255,255))
 	# On récupère la fonction de dessin
 	dr = ImageDraw.Draw(im)
 
 	# On dessine notre arbre
-	dessiner(dr, a, [1000, 20], 1, 0)
+	dessiner(dr, a, [image_Largeur, 20], 1, 0)
 
 	# On affiche l'image dans l'explorateur d'image par défaut
 	im.show()
